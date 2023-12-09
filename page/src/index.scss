@@ -1,0 +1,108 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+body {
+    background-color: #073642;
+    color: #657b83;
+    font-family: "Share Tech", "BIZ UDゴシック";
+}
+
+a {
+    text-decoration: none;
+    color: #2aa198;
+    :visited {
+        color: unset;
+    }
+}
+span.nowrap {
+    white-space: nowrap;
+}
+
+header {
+    box-sizing: border-box;
+    width: 100%;
+    font-size: larger;
+
+    h1 {
+        font-size: 1.5em;
+    }
+    padding: 0.5rem 2rem;
+    position: relative;
+    top: 0;
+    background: #002b36;
+    h1 {
+        color: #93a1a1;
+    }
+    p {
+        color: #657b83;
+    }
+    #inbox {
+        color: #2aa198;
+    }
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0.5rem;
+    justify-content: center;
+}
+.container {
+    margin: 0.5rem;
+    .card {
+        height: 100%;
+        display: flex;
+        .thumbnail {
+            img {
+                object-fit: cover;
+                height: 100%;
+                width: 100%;
+            }
+        }
+        .info {
+            padding: 1rem;
+            line-height: 1.5em;
+            .title {
+                line-height: 2em;
+                border-bottom: whitesmoke dotted 4px;
+                margin-bottom: 0.5em;
+            }
+        }
+    }
+}
+
+@media (min-width: 1000px) or (width: 1000px) {
+    .container {
+        flex: 0 1 1000px;
+        .card {
+            max-width: 990px;
+            border-radius: 1rem 2rem 0.5rem 2rem;
+            .thumbnail {
+                width: 480px;
+                img {
+                    border-radius: 1rem 0 0 2rem;
+                }
+            }
+            .info {
+                width: 100%;
+            }
+        }
+    }
+}
+@media screen and (max-width: 1000px) {
+    .container {
+        width: 100%;
+        .card {
+            flex-direction: column;
+            border-radius: 1rem 2rem 0.5rem 2rem;
+            .thumbnail {
+                flex: 0 1 10rem;
+                height: 0;
+                img {
+                    border-radius: 1rem 2rem 0 0;
+                }
+            }
+        }
+    }
+}
