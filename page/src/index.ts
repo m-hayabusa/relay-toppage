@@ -45,7 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                         thumbnail.classList.add("thumbnail");
                                         {
                                             const thumbnailImage = document.createElement("img");
-                                            thumbnailImage.src = serverInfo.Image;
+                                            if (!serverInfo.Image.endsWith(".svg"))
+                                                thumbnailImage.src = "https://virtualkemomimi.net/proxy/image.webp?url=" + encodeURIComponent(serverInfo.Image);
+                                            else
+                                                thumbnailImage.src = serverInfo.Image;
                                             thumbnail.appendChild(thumbnailImage);
                                         }
                                         card.appendChild(thumbnail);
