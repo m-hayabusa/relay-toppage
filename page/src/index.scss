@@ -72,14 +72,14 @@ header {
     }
 }
 
-@media (min-width: 1000px) or (width: 1000px) {
+@media (min-width: 41em) or (width: 41em) {
     .container {
-        flex: 0 1 1000px;
+        flex: 0 1 50em;
         .card {
-            max-width: 990px;
+            max-width: 50em;
             border-radius: 1rem 2rem 0.5rem 2rem;
             .thumbnail {
-                width: 480px;
+                width: 30em;
                 img {
                     border-radius: 1rem 0 0 2rem;
                 }
@@ -90,7 +90,7 @@ header {
         }
     }
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 41em) {
     .container {
         width: 100%;
         .card {
