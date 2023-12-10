@@ -45,6 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                     const info = document.createElement("div");
                                     info.classList.add("info");
+                                    if (!serverInfo.Image)
+                                        info.classList.add("noimage");
                                     {
                                         const title = document.createElement("div");
                                         title.classList.add("title");
