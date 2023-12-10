@@ -21,16 +21,24 @@ document.addEventListener("DOMContentLoaded", () => {
             const list = document.getElementById("list");
             if (list != null)
                 cards.forEach(serverInfo => {
+                    const bgColor = serverInfo.Color ? serverInfo.Color : serverInfo.Error ? "#002b36" : "#eee8d5";
+                    const fgColor = (() => {
+                        if (serverInfo.Error)
+                            return "#586e75";
+                        else
+                            return fontColorContrast(bgColor) + "DD";
+                    })();
+
                     const container = document.createElement("div"); {
                         container.classList.add("container");
                         {
                             const link = document.createElement("a");
                             link.href = serverInfo.Url;
-                            link.style.color = serverInfo.Color ? fontColorContrast(serverInfo.Color) : "#073642";
+                            link.style.color = fgColor;
                             {
                                 const card = document.createElement("div");
                                 card.classList.add("card");
-                                card.style.backgroundColor = serverInfo.Color ? serverInfo.Color : "#eee8d5";
+                                card.style.backgroundColor = bgColor;
                                 {
                                     if (serverInfo.Image) {
                                         const thumbnail = document.createElement("div");
@@ -55,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                             if (serverInfo.Error) return "fa-shop-slash"
                                             if (!serverInfo.OpenRegistration) return "fa-lock"
                                         })()}"></i>`
-                                        title.style.borderBottomColor = fontColorContrast(serverInfo.Color ? serverInfo.Color : "white");
+                                        title.style.borderBottomColor = fgColor;
                                         info.appendChild(title);
                                         const desc = document.createElement("span");
                                         desc.classList.add("desc");
