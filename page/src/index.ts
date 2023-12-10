@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                         if (serverInfo.Description) {
                                             const cleaner = document.createElement("span");
                                             cleaner.innerHTML = serverInfo.Description;
-                                            const lines = (cleaner.textContent || cleaner.innerText || "").trim();
+                                            const lines = (cleaner.textContent || cleaner.innerText || "").trim().replace(/\n{2,}/g, "\n");
                                             desc.innerText = lines;
                                         }
                                         if (serverInfo.Error) desc.innerText += "(取得できませんでした)";
