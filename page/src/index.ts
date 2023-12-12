@@ -15,9 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (a.OpenRegistration && !b.OpenRegistration) return -1;
                 return Math.floor(Math.random() * 3) - 1;
             })
-            let nasu = "";
-            cards.forEach((c) => { nasu += c.OpenRegistration ? 1 : 0 })
-            console.log(nasu);
             const list = document.getElementById("list");
             if (list != null)
                 cards.forEach(serverInfo => {

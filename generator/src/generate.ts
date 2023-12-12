@@ -6,7 +6,6 @@ import fs from 'fs';
 
 async function main() {
     const json = JSON.stringify(await listup());
-    console.log(json);
     fs.writeFileSync("../page/public/list.json", json);
     process.exit();
 }
