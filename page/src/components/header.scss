@@ -1,0 +1,38 @@
+header {
+    width: 100%;
+    padding: 0.5em;
+    position: relative;
+    top: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    background: #002b36;
+
+    a {
+        color: #2aa198;
+        :visited {
+            color: unset;
+        }
+    }
+
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        li {
+            padding-right: 0.5em;
+        }
+    }
+
+    h1 {
+        color: #93a1a1;
+        font-size: 1.5em;
+    }
+
+    p {
+        color: #657b83;
+    }
+
+    #inbox {
+        color: #2aa198;
+    }
+}
