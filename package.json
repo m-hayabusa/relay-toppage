@@ -9,5 +9,8 @@
         "install:list": "cd generator && npm install",
         "install": "npm run install:common && npm run install:page && npm run install:list",
         "make": "npm run build && cd generator && npm start"
+    },
+    "devDependencies": {
+        "prettier": "^3.1.1"
     }
 }

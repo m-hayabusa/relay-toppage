@@ -6,8 +6,8 @@ class ServerListStore {
     public subscribe(listener: () => void) {
         ServerListStore.listeners.push(listener);
         fetch("list.json")
-            .then((res) => res.json() as Promise<Card[]>)
-            .then((cards) =>
+            .then(res => res.json() as Promise<Card[]>)
+            .then(cards =>
                 cards.sort((a, b) => {
                     if (!a.Title) return 1;
                     if (!b.Title) return -1;
@@ -16,11 +16,11 @@ class ServerListStore {
                     return Math.floor(Math.random() * 3) - 1;
                 })
             )
-            .then((cards) => {
+            .then(cards => {
                 ServerListStore.list = cards;
-                ServerListStore.listeners.forEach((listener) => listener());
+                ServerListStore.listeners.forEach(listener => listener());
             });
-        return () => { };
+        return () => {};
     }
     public getSnapshot() {
         return ServerListStore.list;

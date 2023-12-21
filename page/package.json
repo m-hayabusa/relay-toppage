@@ -1,31 +1,31 @@
 {
-  "name": "front",
-  "version": "1.0.0",
-  "description": "",
-  "scripts": {
-    "build": "npx webpack",
-    "serve": "npx webpack serve --https"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.45",
-    "@types/react-dom": "^18.2.18",
-    "typescript": "^5.3.3"
-  },
-  "dependencies": {
-    "autoprefixer": "^10.4.16",
-    "card": "file:../common",
-    "css-loader": "^6.8.1",
-    "font-color-contrast": "^11.1.0",
-    "postcss": "^8.4.32",
-    "postcss-loader": "^7.3.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sass": "^1.69.5",
-    "sass-loader": "^13.3.2",
-    "style-loader": "^3.3.3",
-    "ts-loader": "^9.5.1",
-    "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
-  }
+    "name": "front",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "build": "npx webpack",
+        "serve": "npx webpack serve --https"
+    },
+    "devDependencies": {
+        "@types/react": "^18.2.45",
+        "@types/react-dom": "^18.2.18",
+        "typescript": "^5.3.3"
+    },
+    "dependencies": {
+        "autoprefixer": "^10.4.16",
+        "card": "file:../common",
+        "css-loader": "^6.8.1",
+        "font-color-contrast": "^11.1.0",
+        "postcss": "^8.4.32",
+        "postcss-loader": "^7.3.3",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "sass": "^1.69.5",
+        "sass-loader": "^13.3.2",
+        "style-loader": "^3.3.3",
+        "ts-loader": "^9.5.1",
+        "webpack": "^5.89.0",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^4.15.1"
+    }
 }

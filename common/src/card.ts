@@ -1,5 +1,13 @@
 export class Card {
-    constructor(url: string, title?: string, description?: string, color?: string, image?: string, openRegistration = false, error = false) {
+    constructor(
+        url: string,
+        title?: string,
+        description?: string,
+        color?: string,
+        image?: string,
+        openRegistration = false,
+        error = false
+    ) {
         this.Url = url;
         this.Title = title;
         this.Description = description;
