@@ -4,6 +4,10 @@
         "build:page": "cd page && npm run build",
         "build:list": "cd generator && npm run build",
         "build": "npm run build:common && npm run build:page && npm run build:list",
+        "install:common": "cd common && npm install",
+        "install:page": "cd page && npm install",
+        "install:list": "cd generator && npm install",
+        "install": "npm run install:common && npm run install:page && npm run install:list",
         "make": "npm run build && cd generator && npm start"
     }
 }

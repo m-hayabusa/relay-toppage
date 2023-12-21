@@ -1,0 +1,20 @@
+{
+	"name": "VmimiRelay",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "code",
+	"workspaceFolder": "/workspace",
+	"postStartCommand": "npm install",
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {}
+	},
+	"forwardPorts": [
+		443
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"eamodio.gitlens"
+			]
+		}
+	}
+}
