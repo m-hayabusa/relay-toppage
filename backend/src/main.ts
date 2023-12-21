@@ -25,6 +25,12 @@ server.register(fastifyStatic, {
     root: path.join(__dirname, "../../page/public"),
 });
 
+server.addContentTypeParser(
+    "application/activity+json",
+    { parseAs: "string" },
+    server.getDefaultJsonParser("ignore", "ignore")
+);
+
 server.register(async server => {
     server.get("/", (req, reply) => {
         reply.sendFile("index.html");
