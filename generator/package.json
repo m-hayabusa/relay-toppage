@@ -9,8 +9,7 @@
     },
     "devDependencies": {
         "@types/node": "^20.10.4",
-        "@types/redis": "^4.0.11",
-        "typescript": "^5.3.3"
+        "@types/redis": "^4.0.11"
     },
     "dependencies": {
         "card": "file:../common",

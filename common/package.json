@@ -8,8 +8,5 @@
     "exports": [
         "./built/card.js"
     ],
-    "types": "./built/card.d.ts",
-    "devDependencies": {
-        "typescript": "^5.3.3"
-    }
+    "types": "./built/card.d.ts"
 }
