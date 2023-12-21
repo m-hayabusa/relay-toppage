@@ -2,13 +2,13 @@
     "scripts": {
         "build:common": "cd common && npm run build",
         "build:page": "cd page && npm run build",
-        "build:list": "cd generator && npm run build",
-        "build": "npm run build:common && npm run build:page && npm run build:list",
+        "build:backend": "cd backend && npm run build",
+        "build": "npm run build:common && npm run build:page && npm run build:backend",
         "install:common": "cd common && npm install",
         "install:page": "cd page && npm install",
-        "install:list": "cd generator && npm install",
-        "install": "npm run install:common && npm run install:page && npm run install:list",
-        "make": "npm run build && cd generator && npm start"
+        "install:backend": "cd backend && npm install",
+        "install": "npm run install:common && npm run install:page && npm run install:backend",
+        "start": "cd backend && npm run start"
     },
     "devDependencies": {
         "prettier": "^3.1.1",

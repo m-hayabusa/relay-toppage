@@ -1,4 +1,21 @@
-export class Card {
+import * as Activity from "./Activity";
+
+export class Note {
+    author = new (class {
+        url: string = "";
+        icon: string = "";
+        tag: Activity.Emoji[] = [];
+        isCat: boolean = false;
+    })();
+    id: string = "";
+    published: Date = new Date();
+    content: string = "";
+    tag: Activity.Emoji[] = [];
+    attachment: Activity.Image[] = [];
+    sensitive: boolean = false;
+}
+
+export class Server {
     constructor(
         url: string,
         title?: string,

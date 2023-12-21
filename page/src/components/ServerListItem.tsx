@@ -1,8 +1,8 @@
 import React from "react";
 import fontColorContrast from "font-color-contrast";
-import { Card } from "card";
+import { ApiResponse } from "common";
 
-export default function ServerListItem(props: Card) {
+export default function ServerListItem(props: ApiResponse.Server) {
     const icon = (() => {
         if (props.Error) return "fa-shop-slash";
         if (!props.OpenRegistration) return "fa-lock";

@@ -1,12 +1,10 @@
 {
-    "name": "card",
+    "name": "common",
     "version": "1.0.0",
     "module": "module",
     "scripts": {
         "build": "npx tsc"
     },
-    "exports": [
-        "./built/card.js"
-    ],
-    "types": "./built/card.d.ts"
+    "exports": "./built/index.js",
+    "types": "./built/index.d.ts"
 }

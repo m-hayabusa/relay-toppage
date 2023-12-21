@@ -1,21 +1,28 @@
-import { Card } from "card";
+import { ApiResponse } from "common";
 
 import { createClient } from "redis";
 import htmlParser from "node-html-parser";
-import fs from "fs";
 
-async function main() {
-    const json = JSON.stringify(await listup());
-    fs.writeFileSync("../page/public/list.json", json);
-    process.exit();
-}
+export let result: ApiResponse.Server[] = [];
 
-async function listup(): Promise<Card[]> {
+const init = async () => {
+    result = await listup();
+    setInterval(
+        async () => {
+            console.log("updating server list");
+            result = await listup();
+        },
+        1000 * 60 * 60
+    );
+};
+init();
+
+async function listup(): Promise<ApiResponse.Server[]> {
     const client = createClient();
     await client.connect();
     const keys = await client.keys("relay:subscription:*");
     const hosts = keys.map(key => key.substring(19));
-    const promises: Promise<Card>[] = [];
+    const promises: Promise<ApiResponse.Server>[] = [];
     hosts.forEach(async h => {
         promises.push(getNodeInfo(h));
     });
@@ -40,7 +47,7 @@ async function listup(): Promise<Card[]> {
     return cards;
 }
 
-async function getNodeInfo(host: string): Promise<Card> {
+async function getNodeInfo(host: string): Promise<ApiResponse.Server> {
     try {
         const f = await fetch(`https://${host}/nodeinfo/2.0`);
 
@@ -55,7 +62,7 @@ async function getNodeInfo(host: string): Promise<Card> {
                 const info = await fetch(
                     `https://${host}/api/v2/instance`
                 ).then(r => r.json() as Promise<any>);
-                return new Card(
+                return new ApiResponse.Server(
                     `https://${info.domain}`,
                     info.title,
                     info.description,
@@ -73,7 +80,7 @@ async function getNodeInfo(host: string): Promise<Card> {
                     body: '{"detail":false}',
                     method: "POST",
                 }).then(r => r.json() as Promise<any>);
-                return new Card(
+                return new ApiResponse.Server(
                     info.uri,
                     info.name,
                     info.description,
@@ -87,7 +94,7 @@ async function getNodeInfo(host: string): Promise<Card> {
         }
     } catch (e) {
         console.warn(host, e);
-        const card = new Card(`https://${host}`);
+        const card = new ApiResponse.Server(`https://${host}`);
         card.Error = true;
         return card;
     }
@@ -96,7 +103,7 @@ async function getNodeInfo(host: string): Promise<Card> {
 async function getCard(host: string) {
     const url = `https://${host}`;
     const f = await fetch(url);
-    const card = new Card(url);
+    const card = new ApiResponse.Server(url);
 
     if (f.status !== 200) {
         card.Error = true;
@@ -121,5 +128,3 @@ async function getCard(host: string) {
         ?.getAttribute("content");
     return card;
 }
-
-main();

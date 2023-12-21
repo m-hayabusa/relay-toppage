@@ -1,12 +1,12 @@
-import { Card } from "card";
+import { ApiResponse } from "common";
 
 class ServerListStore {
-    static list: Card[] = [];
+    static list: ApiResponse.Server[] = [];
     static listeners: (() => void)[] = [];
     public subscribe(listener: () => void) {
         ServerListStore.listeners.push(listener);
-        fetch("list.json")
-            .then(res => res.json() as Promise<Card[]>)
+        fetch("/api/servers")
+            .then(res => res.json() as Promise<ApiResponse.Server[]>)
             .then(cards =>
                 cards.sort((a, b) => {
                     if (!a.Title) return 1;
