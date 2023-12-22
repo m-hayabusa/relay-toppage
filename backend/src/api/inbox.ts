@@ -24,6 +24,7 @@ export const InboxHandler = async (res: FastifyRequest, rep: FastifyReply) => {
         if (person.discoverable) {
             const newNote: ApiResponse.Note = {
                 author: {
+                    name: person.name,
                     url: person.url,
                     icon: person.icon.url,
                     tag: person.tag,

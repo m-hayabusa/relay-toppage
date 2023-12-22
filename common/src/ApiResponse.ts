@@ -2,6 +2,7 @@ import * as Activity from "./Activity";
 
 export class Note {
     author = new (class {
+        name: string = "";
         url: string = "";
         icon: string = "";
         tag: Activity.Emoji[] = [];

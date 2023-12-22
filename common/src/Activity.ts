@@ -17,6 +17,7 @@ export type Content = {
 
 export type Person = Content & {
     type: "Person";
+    name: string;
     url: string;
     discoverable: boolean;
     published: string;
