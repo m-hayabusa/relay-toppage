@@ -24,7 +24,7 @@ async function listup(): Promise<ApiResponse.Server[]> {
     const hosts = keys.map(key => key.substring(19));
     const promises: Promise<ApiResponse.Server>[] = [];
     hosts.forEach(async h => {
-        promises.push(getNodeInfo(h));
+        if (h !== "localhost") promises.push(getNodeInfo(h));
     });
     const cards = await Promise.all(promises);
 
