@@ -64,10 +64,12 @@ export default function ServerListItem(props: ApiResponse.Server) {
 }
 
 function removeHTMLTags(text: string) {
-    const cleaner = document.createElement("span");
-    cleaner.innerHTML = text.replace(/<br( .*?)?\/?>/gi, "\n");
-    const lines = (cleaner.textContent || cleaner.innerText || "")
+    return text
+        .replace(/<script( .*?)?>(.*<\/script( .*?)?>)?/gi, "\n")
+        .replace(/<style( .*?)?>.*?<\/style( .*?)?>/gi, "\n")
+        .replace(/<br( .*?)?\/?>/gi, "\n")
+        .replace(/<\/?p( .*?)?>/gi, "\n")
+        .replace(/<.+?>/g, "")
         .trim()
-        .replace(/\n{2,}/g, "\n");
-    return lines;
+        .replace(/\n{3,}/g, "\n");
 }
