@@ -65,7 +65,7 @@ export default function ServerListItem(props: ApiResponse.Server) {
 
 function removeHTMLTags(text: string) {
     const cleaner = document.createElement("span");
-    cleaner.innerHTML = text;
+    cleaner.innerHTML = text.replace(/<br( .*?)?\/?>/gi, "\n");
     const lines = (cleaner.textContent || cleaner.innerText || "")
         .trim()
         .replace(/\n{2,}/g, "\n");

@@ -23,6 +23,10 @@
                     border-bottom: whitesmoke dotted 0.25em;
                     margin-bottom: 0.5em;
                 }
+                .desc {
+                    word-break: keep-all;
+                    white-space: pre-line;
+                }
             }
         }
     }
