@@ -93,7 +93,14 @@ async function getNodeInfo(host: string): Promise<ApiResponse.Server> {
                 return getCard(host);
         }
     } catch (e) {
-        console.warn(host, e);
+        if ((e as any)?.cause?.code != undefined) {
+            console.warn(
+                `Error: fetch ${host}:`,
+                `${e}, ${(e as any)?.cause?.code}`
+            );
+        } else {
+            console.warn(`Error: fetch ${host}:`, e);
+        }
         const card = new ApiResponse.Server(`https://${host}`);
         card.Error = true;
         return card;
