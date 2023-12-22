@@ -7,25 +7,25 @@ export function Header() {
             <h1>relay.VirtualKemomimi.net</h1>
             <p>
                 VRChatとかResoniteとかClusterとかそのあたりのユーザーを想定した小規模サーバー向けのリレーサーバーです。
-                <ul>
-                    <li>
-                        Inbox:{" "}
-                        <a href="/inbox" onClick={e => e.preventDefault()}>
-                            relay.VirtualKemomimi.net/inbox
-                        </a>
-                    </li>
-                    <li>
-                        Contact: ActivityPub{" "}
-                        <a href="https://mewl.me/@mewl">@mewl@mewl.me</a>
-                    </li>
-                    <li>
-                        Powered by{" "}
-                        <a href="https://github.com/yukimochi/Activity-Relay">
-                            Yukimochi/Activity-Relay
-                        </a>
-                    </li>
-                </ul>
             </p>
+            <ul>
+                <li>
+                    Inbox:{" "}
+                    <a href="/inbox" onClick={e => e.preventDefault()}>
+                        relay.VirtualKemomimi.net/inbox
+                    </a>
+                </li>
+                <li>
+                    Contact: ActivityPub{" "}
+                    <a href="https://mewl.me/@mewl">@mewl@mewl.me</a>
+                </li>
+                <li>
+                    Powered by{" "}
+                    <a href="https://github.com/yukimochi/Activity-Relay">
+                        Yukimochi/Activity-Relay
+                    </a>
+                </li>
+            </ul>
         </header>
     );
 }
