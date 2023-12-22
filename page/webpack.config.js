@@ -25,14 +25,4 @@ module.exports = {
     resolve: {
         extensions: [".ts", ".tsx", ".js"],
     },
-
-    devServer: {
-        static: {
-            directory: `${__dirname}/public`,
-        },
-        port: 443,
-        hot: true,
-        watchFiles: ["src/**/*.ts", "src/**/*.tsx", "src/*.css", "public/**/*"],
-    },
-    watch: false,
 };
