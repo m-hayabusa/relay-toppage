@@ -1,6 +1,7 @@
 import React from "react";
 import fontColorContrast from "font-color-contrast";
 import { ApiResponse } from "common";
+import "./ServerListItem.scss";
 
 export default function ServerListItem(props: ApiResponse.Server) {
     const icon = (() => {
@@ -53,23 +54,11 @@ export default function ServerListItem(props: ApiResponse.Server) {
                         </div>
                         <span className="desc">
                             {props.Error && "(正しく取得できませんでした)"}
-                            {props.Description &&
-                                removeHTMLTags(props.Description)}
+                            {props.Description}
                         </span>
                     </div>
                 </div>
             </a>
         </div>
     );
-}
-
-function removeHTMLTags(text: string) {
-    return text
-        .replace(/<script( .*?)?>(.*<\/script( .*?)?>)?/gi, "\n")
-        .replace(/<style( .*?)?>.*?<\/style( .*?)?>/gi, "\n")
-        .replace(/<br( .*?)?\/?>/gi, "\n")
-        .replace(/<\/?p( .*?)?>/gi, "\n")
-        .replace(/<.+?>/g, "")
-        .trim()
-        .replace(/\n{3,}/g, "\n");
 }
