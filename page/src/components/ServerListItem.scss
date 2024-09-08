@@ -31,9 +31,10 @@
                     position: relative;
 
                     display: inline-flex;
-                    flex-wrap: nowrap;
+                    justify-content: end;
+                    flex-wrap: wrap;
                     text-wrap: nowrap;
-                    gap: 0.5em;
+                    column-gap: 0.5em;
                     margin-inline: 0.5em;
                     .icon {
                         .fa-solid {
@@ -73,6 +74,7 @@
                 color: currentColor;
                 border: none;
                 border-top: dotted 0.25em;
+                margin-inline: 0.5em;
                 margin-bottom: 0.5em;
             }
             .desc {
