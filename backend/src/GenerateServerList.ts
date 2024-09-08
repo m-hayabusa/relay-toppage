@@ -21,30 +21,11 @@ async function listup(): Promise<ApiResponse.Server[]> {
     const client = createClient();
     await client.connect();
     const keys = await client.keys("relay:subscription:*");
-    const hosts = keys.map(key => key.substring(19));
-    const promises: Promise<ApiResponse.Server>[] = [];
-    hosts.forEach(async h => {
-        if (h !== "localhost") promises.push(getNodeInfo(h));
-    });
-    const cards = await Promise.all(promises);
+    const hosts = keys
+        .map(key => key.substring(19))
+        .filter(host => host !== "localhost");
 
-    cards
-        .sort((a, b) => {
-            if (!a.Image || b.Image) return -1;
-            if (a.Image || !b.Image) return 1;
-            return 0;
-        })
-        .sort((a, b) => {
-            if (a.OpenRegistration || !b.OpenRegistration) return -1;
-            if (!a.OpenRegistration || b.OpenRegistration) return 1;
-            return 0;
-        })
-        .sort((a, b) => {
-            if (!a.Title || b.Title) return 1;
-            if (a.Title || !b.Title) return -1;
-            return 0;
-        });
-    return cards;
+    return Promise.all(hosts.map(getNodeInfo));
 }
 
 async function getNodeInfo(host: string): Promise<ApiResponse.Server> {
@@ -62,14 +43,15 @@ async function getNodeInfo(host: string): Promise<ApiResponse.Server> {
                 const info = await fetch(
                     `https://${host}/api/v2/instance`
                 ).then(r => r.json() as Promise<any>);
-                return new ApiResponse.Server(
-                    `https://${info.domain}`,
-                    info.title,
-                    info.description,
-                    (await getCard(host)).Color,
-                    info.thumbnail.url,
-                    nodeinfo.openRegistrations
-                );
+
+                return new ApiResponse.Server({
+                    url: `https://${info.domain}`,
+                    title: info.title,
+                    description: info.description,
+                    color: (await getCard(host)).Color,
+                    image: info.thumbnail.url,
+                    status: {},
+                });
             }
             case "firefish":
             case "misskey": {
@@ -80,14 +62,20 @@ async function getNodeInfo(host: string): Promise<ApiResponse.Server> {
                     body: '{"detail":false}',
                     method: "POST",
                 }).then(r => r.json() as Promise<any>);
-                return new ApiResponse.Server(
-                    info.uri,
-                    info.name,
-                    info.description,
-                    info.themeColor,
-                    info.bannerUrl,
-                    !info.disableRegistration
-                );
+
+                return new ApiResponse.Server({
+                    url: info.uri,
+                    title: info.name,
+                    description: info.description,
+                    color: info.themeColor,
+                    image: info.bannerUrl,
+                    status: {
+                        closed: info.disableRegistration,
+                        relayTimeline:
+                            info.vmimiRelayTimelineImplemented &&
+                            info.disableVmimiRelayTimeline === false,
+                    },
+                });
             }
             default:
                 return getCard(host);
@@ -101,19 +89,20 @@ async function getNodeInfo(host: string): Promise<ApiResponse.Server> {
         } else {
             console.warn(`Error: fetch ${host}:`, e);
         }
-        const card = new ApiResponse.Server(`https://${host}`);
-        card.Error = true;
-        return card;
+        return new ApiResponse.Server({
+            url: `https://${host}`,
+            status: { error: true },
+        });
     }
 }
 
 async function getCard(host: string) {
     const url = `https://${host}`;
     const f = await fetch(url);
-    const card = new ApiResponse.Server(url);
+    const card = new ApiResponse.Server({ url });
 
     if (f.status !== 200) {
-        card.Error = true;
+        card.Status.error = true;
         return card;
     }
 

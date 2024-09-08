@@ -5,17 +5,13 @@ import "./ServerListItem.scss";
 
 export default function ServerListItem(props: ApiResponse.Server) {
     const icon = (() => {
-        if (props.Error) return "fa-shop-slash";
-        if (!props.OpenRegistration) return "fa-lock";
+        if (props.Status.error) return "fa-shop-slash";
+        if (props.Status.closed) return "fa-lock";
     })();
 
-    const bgColor = props.Color
-        ? props.Color
-        : props.Error
-          ? "#002b36"
-          : "#eee8d5";
+    const bgColor = props.Color ?? props.Status.error ? "#002b36" : "#eee8d5";
     const fgColor = (() => {
-        if (props.Error) return "#586e75";
+        if (props.Status.error) return "#586e75";
         else return fontColorContrast(bgColor) + "DD";
     })();
 
@@ -53,7 +49,8 @@ export default function ServerListItem(props: ApiResponse.Server) {
                             )}
                         </div>
                         <span className="desc">
-                            {props.Error && "(正しく取得できませんでした)"}
+                            {props.Status.error &&
+                                "(正しく取得できませんでした)"}
                             {props.Description}
                         </span>
                     </div>

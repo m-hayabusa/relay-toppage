@@ -10,11 +10,12 @@ class ServerListStore {
             .then(cards =>
                 cards
                     .sort((a, b) => {
+                        if (a.Status.error && !b.Status.error) return 1;
+                        if (!a.Status.error && b.Status.error) return -1;
                         if (!a.Title) return 1;
                         if (!b.Title) return -1;
-                        if (!a.OpenRegistration && b.OpenRegistration) return 1;
-                        if (a.OpenRegistration && !b.OpenRegistration)
-                            return -1;
+                        if (a.Status.closed && !b.Status.closed) return 1;
+                        if (!a.Status.closed && b.Status.closed) return -1;
                         return Math.floor(Math.random() * 3) - 1;
                     })
                     .map(e => {

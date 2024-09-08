@@ -16,29 +16,28 @@ export class Note {
     sensitive: boolean = false;
 }
 
+type ServerStatus = "error" | "closed" | "relayTimeline";
+
 export class Server {
-    constructor(
-        url: string,
-        title?: string,
-        description?: string,
-        color?: string,
-        image?: string,
-        openRegistration = false,
-        error = false
-    ) {
-        this.Url = url;
-        this.Title = title;
-        this.Description = description;
-        this.Color = color;
-        this.Image = image;
-        this.OpenRegistration = openRegistration;
-        this.Error = error;
+    constructor(params: {
+        url: string;
+        title?: string;
+        description?: string;
+        color?: string;
+        image?: string;
+        status?: { [key in ServerStatus]?: boolean };
+    }) {
+        this.Url = params.url;
+        this.Title = params.title;
+        this.Description = params.description;
+        this.Color = params.color;
+        this.Image = params.image;
+        this.Status = params.status ?? {};
     }
-    OpenRegistration: boolean;
     Url: string;
-    Title: string | undefined;
-    Description: string | undefined;
-    Color: string | undefined;
-    Image: string | undefined;
-    Error: boolean;
+    Title?: string;
+    Description?: string;
+    Color?: string;
+    Image?: string;
+    Status: { [key in ServerStatus]?: boolean };
 }
