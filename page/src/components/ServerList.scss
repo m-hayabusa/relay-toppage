@@ -1,6 +1,25 @@
 .listColumn {
-    margin: 0.5rem;
+    margin: 4em;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 1em;
+}
+
+.listRow {
+    display: grid;
+    align-self: flex-start;
+    gap: 1em;
+}
+
+@media screen and (width > 45em) {
+    .listColumn {
+        margin: 4em;
+    }
+}
+
+@media screen and (width <= 45em) {
+    .listColumn {
+        margin: 1em;
+    }
 }

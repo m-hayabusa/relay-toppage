@@ -1,6 +1,5 @@
 .container {
-    margin: 0.5rem;
-    margin-bottom: 1em;
+    max-width: 45em;
     .card {
         height: 100%;
         display: flex;
@@ -24,6 +23,7 @@
 
                     display: inline-flex;
                     flex-wrap: nowrap;
+                    text-wrap: nowrap;
                     gap: 0.5em;
                     margin-inline: 0.5em;
                     .icon {
@@ -43,7 +43,6 @@
                             position: absolute;
                             z-index: 1;
                             width: max-content;
-                            max-width: 15em;
 
                             bottom: 80%;
                             left: 100%;
@@ -74,10 +73,9 @@
         }
     }
 
-    @media (min-width: 41em) or (width: 41em) {
-        flex: 0 1 50em;
+    @media screen and (width > 45em) {
         .card {
-            max-width: 50em;
+            max-width: 40em;
             border-radius: 1.1rem 2rem 0.5rem 2.1rem;
             .thumbnail {
                 width: 30em;
@@ -95,14 +93,19 @@
                 .desc {
                     margin-inline: 1em;
                 }
-                &.noimage .title {
-                    margin-left: 1.5em;
+                &.noimage {
+                    .title {
+                        margin-left: 1.5em;
+                    }
+                    .desc {
+                        margin-bottom: 0.5em;
+                    }
                 }
             }
         }
     }
 
-    @media screen and (max-width: 41em) {
+    @media screen and (width <= 45em) {
         .card {
             flex-direction: column;
             border-radius: 1.1rem 2.1rem 0.5rem 2rem;

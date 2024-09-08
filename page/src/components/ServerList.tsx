@@ -1,10 +1,16 @@
-import React, { useSyncExternalStore, useLayoutEffect, useState } from "react";
+import React, {
+    useSyncExternalStore,
+    useLayoutEffect,
+    useState,
+    useRef,
+} from "react";
 import ServerListItem from "./ServerListItem";
 import ServerListStore from "../store/ServerListStore";
 import "./ServerList.scss";
 
-export function ServerList(props: {}) {
-    console.log("Render");
+export function ServerList() {
+    const listColumn = useRef<HTMLDivElement>(null);
+
     const list = useSyncExternalStore(
         ServerListStore.subscribe,
         ServerListStore.getSnapshot
@@ -17,7 +23,9 @@ export function ServerList(props: {}) {
                 const rem = parseFloat(
                     getComputedStyle(document.documentElement).fontSize
                 );
-                const width = Math.floor(window.innerWidth / (52 * rem));
+                const width = Math.floor(
+                    (listColumn.current?.clientWidth ?? 1) / (42 * rem)
+                );
                 setSize(width < 1 ? 1 : width);
             };
 
@@ -62,7 +70,7 @@ export function ServerList(props: {}) {
     });
 
     return (
-        <div className="listColumn">
+        <div className="listColumn" ref={listColumn}>
             {rows.map(e => (
                 <div className="listRow">{e.items}</div>
             ))}
