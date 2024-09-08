@@ -50,11 +50,12 @@ export function ServerList() {
     }, [width]);
 
     useEffect(() => {
-        if (count !== 0) return;
-
+        let timeout: NodeJS.Timeout | undefined;
         (async () => {
-            for (let i = 0; i < items.length; i++) {
-                await new Promise(res => setTimeout(res, 10));
+            for (let i = count; i < items.length; i++) {
+                await new Promise(res => {
+                    timeout = setTimeout(res, 20);
+                });
 
                 const item = items[i];
                 if (!item) return;
@@ -67,7 +68,7 @@ export function ServerList() {
                     .sort((a, b) => {
                         if (a.height < b.height) return -1;
                         if (a.height > b.height) return 1;
-                        return 0;
+                        return Math.floor(Math.random() * 3) - 1;
                     })[0].index;
 
                 setRowItems(rowItems => {
@@ -77,6 +78,10 @@ export function ServerList() {
                 setCount(count => count + 1);
             }
         })();
+
+        return () => {
+            clearTimeout(timeout);
+        };
     }, [count, items]);
 
     return (
