@@ -6,6 +6,7 @@ import htmlParser from "node-html-parser";
 export let result: ApiResponse.Server[] = [];
 
 const init = async () => {
+    result = await listup(true);
     result = await listup();
     setInterval(
         async () => {
@@ -17,13 +18,19 @@ const init = async () => {
 };
 init();
 
-async function listup(): Promise<ApiResponse.Server[]> {
+async function listup(quick?: boolean): Promise<ApiResponse.Server[]> {
     const client = createClient();
     await client.connect();
     const keys = await client.keys("relay:subscription:*");
     const hosts = keys
         .map(key => key.substring(19))
         .filter(host => host !== "localhost");
+
+    if (quick) {
+        return hosts.map(
+            host => new ApiResponse.Server({ url: `https://${host}` })
+        );
+    }
 
     return Promise.all(hosts.map(getNodeInfo));
 }
