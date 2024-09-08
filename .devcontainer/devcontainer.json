@@ -1,6 +1,6 @@
 {
     "name": "VmimiRelay",
-    "dockerComposeFile": "docker-compose.yml",
+    "dockerComposeFile": "compose.yml",
     "service": "code",
     "workspaceFolder": "/workspace",
     "postStartCommand": "npm install",
