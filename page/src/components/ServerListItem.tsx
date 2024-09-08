@@ -58,8 +58,8 @@ export default function ServerListItem(props: ApiResponse.Server) {
                                 {props.Title ?? props.Url}
                             </span>
                             <span className="icons">
-                                {icons.map(icon => (
-                                    <span className="icon">
+                                {icons.map((icon, index) => (
+                                    <span className="icon" key={index}>
                                         <i
                                             className={`fa-solid ${icon.name}`}
                                         />

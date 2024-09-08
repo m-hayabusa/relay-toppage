@@ -9,6 +9,7 @@ import React, {
 import ServerListItem from "./ServerListItem";
 import ServerListStore from "../store/ServerListStore";
 import "./ServerList.scss";
+import { ApiResponse } from "common";
 
 export function ServerList() {
     const listColumn = useRef<HTMLDivElement>(null);
@@ -18,14 +19,18 @@ export function ServerList() {
         createRef<HTMLDivElement>(),
     ]);
 
-    const [rowItems, setRowItems] = useState<JSX.Element[][]>([[], [], []]);
+    const [rowItems, setRowItems] = useState<ApiResponse.Server[][]>([
+        [],
+        [],
+        [],
+    ]);
     const [width, setWidth] = useState(1);
     const [count, setCount] = useState(0);
 
     const items = useSyncExternalStore(
         ServerListStore.subscribe,
         ServerListStore.getSnapshot
-    ).map(ServerListItem);
+    );
 
     useLayoutEffect(() => {
         const updateSize = (): void => {
@@ -86,18 +91,13 @@ export function ServerList() {
 
     return (
         <div className="listColumn" ref={listColumn}>
-            {rowItems.map(
-                (e, i) =>
-                    i < width && (
-                        <div
-                            className="listRow"
-                            ref={listRows.current[i]}
-                            key={i}
-                        >
-                            {e}
-                        </div>
-                    )
-            )}
+            {rowItems.slice(0, width).map((cards, i) => (
+                <div className="listRow" ref={listRows.current[i]} key={i}>
+                    {cards.map((card, j) => (
+                        <ServerListItem {...card} key={j} />
+                    ))}
+                </div>
+            ))}
         </div>
     );
 }
