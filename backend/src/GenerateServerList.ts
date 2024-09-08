@@ -57,7 +57,7 @@ async function getNodeInfo(host: string): Promise<ApiResponse.Server> {
                     description: info.description,
                     color: (await getCard(host)).Color,
                     image: info.thumbnail.url,
-                    status: {},
+                    status: { closed: !nodeinfo.openRegistrations },
                 });
             }
             case "firefish":
