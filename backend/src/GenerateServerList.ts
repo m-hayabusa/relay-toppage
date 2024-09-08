@@ -79,8 +79,9 @@ async function getNodeInfo(host: string): Promise<ApiResponse.Server> {
                     status: {
                         closed: info.disableRegistration,
                         relayTimeline:
-                            info.vmimiRelayTimelineImplemented &&
-                            info.disableVmimiRelayTimeline === false,
+                            nodeinfo.metadata.vmimiRelayTimelineImplemented &&
+                            nodeinfo.metadata.disableVmimiRelayTimeline ===
+                                false,
                     },
                 });
             }

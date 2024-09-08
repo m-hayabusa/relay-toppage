@@ -16,6 +16,10 @@ class ServerListStore {
                         if (!b.Title) return -1;
                         if (a.Status.closed && !b.Status.closed) return 1;
                         if (!a.Status.closed && b.Status.closed) return -1;
+                        if (!a.Status.relayTimeline && b.Status.relayTimeline)
+                            return 1;
+                        if (a.Status.relayTimeline && !b.Status.relayTimeline)
+                            return -1;
                         return Math.floor(Math.random() * 3) - 1;
                     })
                     .map(e => {
