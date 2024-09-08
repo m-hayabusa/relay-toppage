@@ -16,13 +16,14 @@ export default function ServerListItem(props: ApiResponse.Server) {
         icons.push({
             name: "fa-lock",
             label: "招待制",
-            description: "登録には、招待コードが必要です",
+            description: "登録は許可制で、招待コードが必要です",
         });
     if (props.Status.relayTimeline)
         icons.push({
             name: "fa-circle-nodes",
             label: "リレーTL",
-            description: "参加サーバーの投稿を見られるタイムラインがある",
+            description:
+                "リレーに参加しているサーバーの投稿を見られるタイムラインがあります",
         });
 
     const bgColor = props.Color ?? (props.Status.error ? "#002b36" : "#eee8d5");
