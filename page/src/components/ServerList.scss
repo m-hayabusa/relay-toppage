@@ -16,10 +16,16 @@
     .listColumn {
         margin: 4em;
     }
+    .listRow {
+        width: 40em;
+    }
 }
 
 @media screen and (width <= 45em) {
     .listColumn {
         margin: 1em;
+    }
+    .listRow {
+        width: 100%;
     }
 }

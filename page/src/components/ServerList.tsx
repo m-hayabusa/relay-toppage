@@ -3,6 +3,8 @@ import React, {
     useLayoutEffect,
     useState,
     useRef,
+    createRef,
+    useEffect,
 } from "react";
 import ServerListItem from "./ServerListItem";
 import ServerListStore from "../store/ServerListStore";
@@ -10,70 +12,87 @@ import "./ServerList.scss";
 
 export function ServerList() {
     const listColumn = useRef<HTMLDivElement>(null);
+    const listRows = useRef<React.RefObject<HTMLDivElement>[]>([
+        createRef<HTMLDivElement>(),
+        createRef<HTMLDivElement>(),
+        createRef<HTMLDivElement>(),
+    ]);
 
-    const list = useSyncExternalStore(
+    const [rowItems, setRowItems] = useState<JSX.Element[][]>([[], [], []]);
+    const [width, setWidth] = useState(1);
+    const [count, setCount] = useState(0);
+
+    const items = useSyncExternalStore(
         ServerListStore.subscribe,
         ServerListStore.getSnapshot
-    );
+    ).map(ServerListItem);
 
-    const width = (): number => {
-        const [size, setSize] = useState(0);
-        useLayoutEffect(() => {
-            const updateSize = (): void => {
-                const rem = parseFloat(
-                    getComputedStyle(document.documentElement).fontSize
-                );
-                const width = Math.floor(
-                    (listColumn.current?.clientWidth ?? 1) / (42 * rem)
-                );
-                setSize(width < 1 ? 1 : width);
-            };
-
-            window.addEventListener("resize", updateSize);
-            updateSize();
-
-            return () => window.removeEventListener("resize", updateSize);
-        }, []);
-        return size;
-    };
-
-    const items = list.map(item => {
-        let count: number = 2;
-        const desc = item.Description?.split("\n");
-        count += desc?.length ?? 0;
-        count +=
-            desc
-                ?.map(line => line.length / (item.Image ? 30 : 48))
-                .reduce((a, b) => a + b) ?? 0;
-        if (item.Image != undefined && count < 9) count = 9;
-        if (item.Image == undefined && count < 4) count = 4;
-
-        return {
-            lines: count,
-            item: ServerListItem(item),
+    useLayoutEffect(() => {
+        const updateSize = (): void => {
+            const rem = parseFloat(
+                getComputedStyle(document.documentElement).fontSize
+            );
+            const width = Math.floor(
+                (listColumn.current?.clientWidth ?? 1) / (42 * rem)
+            );
+            setWidth(width < 1 ? 1 : width <= 3 ? width : 3);
         };
-    });
 
-    const rows: { lines: number; items: React.JSX.Element[] }[] = Array(width())
-        .fill(undefined, 0, width())
-        .map(() => {
-            return { lines: 0, items: [] };
-        });
-    items.forEach(item => {
-        const shortest = rows.sort((a, b) => {
-            if (a.lines < b.lines) return -1;
-            if (a.lines > b.lines) return 1;
-            return 0;
-        })[0];
-        shortest.lines += item.lines;
-        shortest.items.push(item.item);
-    });
+        updateSize();
+
+        window.addEventListener("resize", updateSize);
+        return () => window.removeEventListener("resize", updateSize);
+    }, []);
+
+    useEffect(() => {
+        setCount(0);
+        setRowItems([[], [], []]);
+    }, [width]);
+
+    useEffect(() => {
+        if (count !== 0) return;
+
+        (async () => {
+            for (let i = 0; i < items.length; i++) {
+                await new Promise(res => setTimeout(res, 10));
+
+                const item = items[i];
+                if (!item) return;
+
+                const shortest = listRows.current
+                    .map((row, index) => ({
+                        index,
+                        height: row.current?.clientHeight ?? Infinity,
+                    }))
+                    .sort((a, b) => {
+                        if (a.height < b.height) return -1;
+                        if (a.height > b.height) return 1;
+                        return 0;
+                    })[0].index;
+
+                setRowItems(rowItems => {
+                    rowItems[shortest].push(item);
+                    return rowItems;
+                });
+                setCount(count => count + 1);
+            }
+        })();
+    }, [count, items]);
 
     return (
         <div className="listColumn" ref={listColumn}>
-            {rows.map(e => (
-                <div className="listRow">{e.items}</div>
-            ))}
+            {rowItems.map(
+                (e, i) =>
+                    i < width && (
+                        <div
+                            className="listRow"
+                            ref={listRows.current[i]}
+                            key={i}
+                        >
+                            {e}
+                        </div>
+                    )
+            )}
         </div>
     );
 }

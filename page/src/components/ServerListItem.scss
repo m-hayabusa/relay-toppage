@@ -1,5 +1,14 @@
 .container {
     max-width: 45em;
+    animation: show 100ms ease-in forwards;
+
+    opacity: 0;
+    @keyframes show {
+        100% {
+            opacity: 1;
+        }
+    }
+
     .card {
         height: 100%;
         display: flex;
