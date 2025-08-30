@@ -3,6 +3,8 @@ import fontColorContrast from "font-color-contrast";
 import { ApiResponse } from "@/common";
 import "./ServerListItem.scss";
 
+import Image from "next/image";
+
 export default function ServerListItem(props: ApiResponse.Server) {
     const icons: { name: string; label: string; description: string }[] = [];
 
@@ -41,7 +43,7 @@ export default function ServerListItem(props: ApiResponse.Server) {
                 >
                     {props.Image && (
                         <div className="thumbnail">
-                            <img
+                            <Image
                                 src={
                                     props.Image.endsWith(".svg")
                                         ? props.Image
@@ -49,6 +51,10 @@ export default function ServerListItem(props: ApiResponse.Server) {
                                             props.Image
                                         )}`
                                 }
+                                alt={props.Title ?? props.Url}
+                                fill
+                                sizes="100px"
+                                style={{ objectFit: 'contain' }}
                             />
                         </div>
                     )}

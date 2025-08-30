@@ -53,4 +53,5 @@ function removeHTMLTags(text: string) {
         .replace(/\n{3,}/g, "\n");
 }
 
-export default new ServerListStore();
+const serverListStore = new ServerListStore();
+export default serverListStore;

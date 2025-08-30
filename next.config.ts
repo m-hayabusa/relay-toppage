@@ -1,7 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'virtualkemomimi.net',
+                port: '',
+                pathname: '/proxy/image.webp',
+            },
+        ],
+    },
 };
 
 export default nextConfig;

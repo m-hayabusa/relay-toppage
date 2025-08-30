@@ -24,4 +24,5 @@ class NoteRepository {
     };
 }
 
-export default new NoteRepository();
+const noteRepository = new NoteRepository();
+export default noteRepository;
