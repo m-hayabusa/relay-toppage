@@ -2,7 +2,6 @@
 
 import React, {
     useSyncExternalStore,
-    useLayoutEffect,
     useState,
     useRef,
     createRef,
@@ -19,16 +18,10 @@ export function ServerList() {
         createRef<HTMLDivElement>(),
         createRef<HTMLDivElement>(),
         createRef<HTMLDivElement>(),
-        createRef<HTMLDivElement>(),
     ]);
 
-    const [rowItems, setRowItems] = useState<ApiResponse.Server[][]>([
-        [],
-        [],
-        [],
-    ]);
+    const [rowItems, setRowItems] = useState<ApiResponse.Server[][]>([[], [], [],]);
     const [width, setWidth] = useState(1);
-    const [count, setCount] = useState(0);
 
     const items = useSyncExternalStore(
         ServerListStore.subscribe,
@@ -36,7 +29,7 @@ export function ServerList() {
         ServerListStore.getServerSnapshot
     );
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const updateSize = (): void => {
             const rem = parseFloat(
                 getComputedStyle(document.documentElement).fontSize
@@ -54,20 +47,18 @@ export function ServerList() {
     }, []);
 
     useEffect(() => {
-        setCount(0);
         setRowItems([[], [], []]);
-    }, [width]);
 
-    useEffect(() => {
         let timeout: NodeJS.Timeout | undefined;
-        (async () => {
-            for (let i = count; i < items.length; i++) {
-                await new Promise(res => {
-                    timeout = setTimeout(res, 20);
-                });
+        let cancelled = false;
 
-                const item = items[i];
-                if (!item) return;
+        (async () => {
+            const rowItems: ApiResponse.Server[][] = [[], [], []];
+
+            for (const item of items) {
+                await new Promise(res => setTimeout(res, 20));
+
+                if (!item || cancelled) return;
 
                 const shortest = listRows.current
                     .map((row, index) => ({
@@ -80,18 +71,17 @@ export function ServerList() {
                         return Math.floor(Math.random() * 3) - 1;
                     })[0].index;
 
-                setRowItems(rowItems => {
-                    rowItems[shortest].push(item);
-                    return rowItems;
-                });
-                setCount(count => count + 1);
+
+                rowItems[shortest].push(item);
+                setRowItems([...rowItems]);
             }
         })();
 
         return () => {
+            cancelled = true;
             clearTimeout(timeout);
         };
-    }, [count, items]);
+    }, [items, width]);
 
     return (
         <div className="listColumn" ref={listColumn}>

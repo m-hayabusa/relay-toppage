@@ -46,7 +46,7 @@ async function listup(quick?: boolean): Promise<ApiResponse.Server[]> {
     const hosts = keys.map((key) => key.substring(19)).filter((host) => host !== "localhost");
 
     if (quick) {
-        return hosts.map((host) => new ApiResponse.Server({ url: `https://${host}` }));
+        return hosts.map((host) => ({ Url: `https://${host}`, Status: {} }));
     }
 
     return Promise.all(hosts.map(getNodeInfo));
@@ -66,14 +66,14 @@ async function getNodeInfo(host: string): Promise<ApiResponse.Server> {
             case "mastodon": {
                 const info = await fetch(`https://${host}/api/v2/instance`).then((r) => r.json() as Promise<any>);
 
-                return new ApiResponse.Server({
-                    url: `https://${info.domain}`,
-                    title: info.title,
-                    description: info.description,
-                    color: (await getCard(host)).Color,
-                    image: info.thumbnail.url,
-                    status: { closed: !nodeinfo.openRegistrations },
-                });
+                return {
+                    Url: `https://${info.domain}`,
+                    Title: info.title,
+                    Description: info.description,
+                    Color: (await getCard(host)).Color,
+                    Image: info.thumbnail.url,
+                    Status: { closed: !nodeinfo.openRegistrations },
+                };
             }
             case "firefish":
             case "misskey": {
@@ -85,17 +85,17 @@ async function getNodeInfo(host: string): Promise<ApiResponse.Server> {
                     method: "POST",
                 }).then((r) => r.json() as Promise<any>);
 
-                return new ApiResponse.Server({
-                    url: info.uri,
-                    title: info.name,
-                    description: info.description,
-                    color: info.themeColor,
-                    image: info.bannerUrl,
-                    status: {
+                return {
+                    Url: info.uri,
+                    Title: info.name,
+                    Description: info.description,
+                    Color: info.themeColor,
+                    Image: info.bannerUrl,
+                    Status: {
                         closed: info.disableRegistration,
                         relayTimeline: nodeinfo.metadata.vmimiRelayTimelineImplemented && nodeinfo.metadata.disableVmimiRelayTimeline === false,
                     },
-                });
+                };
             }
             default:
                 return getCard(host);
@@ -106,17 +106,17 @@ async function getNodeInfo(host: string): Promise<ApiResponse.Server> {
         } else {
             console.warn(`Error: fetch ${host}:`, e);
         }
-        return new ApiResponse.Server({
-            url: `https://${host}`,
-            status: { error: true },
-        });
+        return {
+            Url: `https://${host}`,
+            Status: { error: true },
+        };
     }
 }
 
 async function getCard(host: string) {
     const url = `https://${host}`;
     const f = await fetch(url);
-    const card = new ApiResponse.Server({ url });
+    const card: ApiResponse.Server = { Url: url, Status: {} };
 
     if (f.status !== 200) {
         card.Status.error = true;

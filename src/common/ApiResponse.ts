@@ -18,22 +18,7 @@ export class Note {
 
 type ServerStatus = "error" | "closed" | "relayTimeline";
 
-export class Server {
-    constructor(params: {
-        url: string;
-        title?: string;
-        description?: string;
-        color?: string;
-        image?: string;
-        status?: { [key in ServerStatus]?: boolean };
-    }) {
-        this.Url = params.url;
-        this.Title = params.title;
-        this.Description = params.description;
-        this.Color = params.color;
-        this.Image = params.image;
-        this.Status = params.status ?? {};
-    }
+export interface Server {
     Url: string;
     Title?: string;
     Description?: string;
