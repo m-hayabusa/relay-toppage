@@ -1,0 +1,22 @@
+{
+    "scripts": {
+        "build:common": "cd common && npm run build",
+        "build:page": "cd page && npm run build",
+        "build:page:watch": "cd page && npm run build:watch",
+        "build:backend": "cd backend && npm run build",
+        "build": "npm run build:common && npm run build:page && npm run build:backend",
+        "install:common": "cd common && npm install",
+        "install:page": "cd page && npm install",
+        "install:backend": "cd backend && npm install",
+        "install": "npm run install:common && npm run install:page && npm run install:backend",
+        "start": "cd backend && npm run start",
+        "dev:page": "npm run build:common && npm run build:backend && NODE_ENV=development concurrently -c white,gray -n WebPack,Fastify npm:build:page:watch npm:start"
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.2",
+        "prettier": "^3.1.1"
+    },
+    "dependencies": {
+        "typescript": "^5.3.3"
+    }
+}
