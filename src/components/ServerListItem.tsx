@@ -52,9 +52,9 @@ export default function ServerListItem(props: ApiResponse.Server) {
                                         )}`
                                 }
                                 alt={props.Title ?? props.Url}
-                                fill
-                                sizes="100px"
-                                style={{ objectFit: 'contain' }}
+                                width={0}
+                                height={0}
+                                sizes="100%"
                             />
                         </div>
                     )}
