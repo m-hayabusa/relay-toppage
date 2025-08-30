@@ -1,3 +1,5 @@
+"use client"
+
 import React, {
     useSyncExternalStore,
     useLayoutEffect,
@@ -9,7 +11,7 @@ import React, {
 import ServerListItem from "./ServerListItem";
 import ServerListStore from "../store/ServerListStore";
 import "./ServerList.scss";
-import { ApiResponse } from "common";
+import { ApiResponse } from "@/common";
 
 export function ServerList() {
     const listColumn = useRef<HTMLDivElement>(null);

@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import MessageListeners from "../MessageListeners";
-import { Activity, ApiResponse } from "common";
+import { Activity, ApiResponse } from "@/common";
 import NoteRepositry from "../repository/NoteRepository";
 
 export const OnNewMessageListeners = new MessageListeners();

@@ -1,8 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import NoteRepository from "../repository/NoteRepository";
 import { OnNewMessageListeners } from "./inbox";
-import { ApiResponse } from "common";
+import { ApiResponse } from "@/common";
 import { SocketStream } from "@fastify/websocket";
+import NoteRepository from "@/lib/server/repository/NoteRepository";
 
 export const NotesStreamHandler = async (
     websocket: SocketStream,

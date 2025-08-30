@@ -1,6 +1,6 @@
 import React from "react";
 import fontColorContrast from "font-color-contrast";
-import { ApiResponse } from "common";
+import { ApiResponse } from "@/common";
 import "./ServerListItem.scss";
 
 export default function ServerListItem(props: ApiResponse.Server) {
@@ -46,8 +46,8 @@ export default function ServerListItem(props: ApiResponse.Server) {
                                     props.Image.endsWith(".svg")
                                         ? props.Image
                                         : `https://virtualkemomimi.net/proxy/image.webp?url=${encodeURIComponent(
-                                              props.Image
-                                          )}`
+                                            props.Image
+                                        )}`
                                 }
                             />
                         </div>

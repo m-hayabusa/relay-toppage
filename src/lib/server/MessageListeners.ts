@@ -1,4 +1,4 @@
-import { ApiResponse } from "common";
+import { ApiResponse } from "@/common";
 
 type MessageListenerHandler = (post: ApiResponse.Note) => void;
 

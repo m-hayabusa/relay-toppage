@@ -1,4 +1,6 @@
-import { ApiResponse } from "common";
+//FIXME: 後で直す
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ApiResponse } from "@/common";
 
 import { createClient } from "redis";
 import htmlParser from "node-html-parser";

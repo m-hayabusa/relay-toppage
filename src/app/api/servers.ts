@@ -1,5 +1,5 @@
+import { result } from "@/lib/server/GenerateServerList";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { result } from "../GenerateServerList";
 
 export const ServersHandler = (
     responce: FastifyRequest,

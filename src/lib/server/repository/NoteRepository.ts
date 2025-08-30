@@ -1,4 +1,4 @@
-import { ApiResponse } from "common";
+import { ApiResponse } from "@/common";
 
 class NoteRepository {
     notes: ApiResponse.Note[] = [];
