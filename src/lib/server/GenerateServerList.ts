@@ -5,20 +5,17 @@ import { ApiResponse } from "@/common";
 import { createClient } from "redis";
 import htmlParser from "node-html-parser";
 
-export let result: ApiResponse.Server[] = [];
+let initialized = false;
 
-const init = async () => {
-    result = await listup(true);
-    result = await listup();
-    setInterval(
-        async () => {
-            console.log("updating server list");
-            result = await listup();
-        },
-        1000 * 60 * 60
-    );
-};
-init();
+export const getResult= async ():Promise<ApiResponse.Server[]> => {
+    if (!initialized) {
+        listup(); // 初回はできる限り速く一覧を返したい
+        initialized = true;
+        return await listup(true);
+    }
+    const result = await listup();
+    return result;
+}
 
 async function listup(quick?: boolean): Promise<ApiResponse.Server[]> {
     const client = createClient();
