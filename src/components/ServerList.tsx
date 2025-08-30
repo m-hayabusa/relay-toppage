@@ -15,7 +15,8 @@ import { ApiResponse } from "@/common";
 
 export function ServerList() {
     const listColumn = useRef<HTMLDivElement>(null);
-    const listRows = useRef<React.RefObject<HTMLDivElement>[]>([
+    const listRows = useRef([
+        createRef<HTMLDivElement>(),
         createRef<HTMLDivElement>(),
         createRef<HTMLDivElement>(),
         createRef<HTMLDivElement>(),
@@ -31,7 +32,8 @@ export function ServerList() {
 
     const items = useSyncExternalStore(
         ServerListStore.subscribe,
-        ServerListStore.getSnapshot
+        ServerListStore.getSnapshot,
+        ServerListStore.getServerSnapshot
     );
 
     useLayoutEffect(() => {

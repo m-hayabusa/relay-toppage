@@ -37,6 +37,9 @@ class ServerListStore {
     public getSnapshot() {
         return ServerListStore.list;
     }
+    public getServerSnapshot() {
+        return ServerListStore.list;
+    }
 }
 
 function removeHTMLTags(text: string) {
